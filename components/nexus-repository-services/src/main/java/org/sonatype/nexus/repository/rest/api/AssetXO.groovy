@@ -23,6 +23,11 @@ import static org.sonatype.nexus.repository.search.index.SearchConstants.ATTRIBU
 import static org.sonatype.nexus.repository.search.index.SearchConstants.CHECKSUM
 import static org.sonatype.nexus.repository.search.index.SearchConstants.ID
 import static org.sonatype.nexus.repository.search.index.SearchConstants.NAME
+import org.sonatype.goodies.common.Loggers
+
+import org.slf4j.Logger
+
+import java.text.SimpleDateFormat
 
 /**
  * Asset transfer object for REST APIs.
@@ -35,6 +40,8 @@ import static org.sonatype.nexus.repository.search.index.SearchConstants.NAME
 @EqualsAndHashCode(includes = ['id'])
 class AssetXO
 {
+  public static final Logger log = Loggers.getLogger(AssetXO.class)
+
   String downloadUrl
 
   String path
@@ -45,16 +52,20 @@ class AssetXO
 
   String format
 
+  String lastDownload
+
   Map checksum
 
   static AssetXO fromElasticSearchMap(final Map map, final Repository repository) {
     String path = map.get(NAME)
     String id = map.get(ID)
     Map checksum = (Map) map.get(ATTRIBUTES, [:])[CHECKSUM]
+    String date = new Date().format("yyyy-MM-dd'T'HH:mm:ssZ");
     return builder()
         .path(path)
         .downloadUrl(repository.url + '/' + path)
         .id(new RepositoryItemIDXO(repository.name, id).value)
+        .lastDownload(date)
         .repository(repository.name)
         .checksum(checksum)
         .format(repository.format.value)
