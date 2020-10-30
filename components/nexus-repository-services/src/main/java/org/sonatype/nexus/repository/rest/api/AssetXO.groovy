@@ -23,11 +23,6 @@ import static org.sonatype.nexus.repository.search.index.SearchConstants.ATTRIBU
 import static org.sonatype.nexus.repository.search.index.SearchConstants.CHECKSUM
 import static org.sonatype.nexus.repository.search.index.SearchConstants.ID
 import static org.sonatype.nexus.repository.search.index.SearchConstants.NAME
-import org.sonatype.goodies.common.Loggers
-
-import org.slf4j.Logger
-
-import java.text.SimpleDateFormat
 
 /**
  * Asset transfer object for REST APIs.
@@ -40,8 +35,6 @@ import java.text.SimpleDateFormat
 @EqualsAndHashCode(includes = ['id'])
 class AssetXO
 {
-  public static final Logger log = Loggers.getLogger(AssetXO.class)
-
   String downloadUrl
 
   String path
